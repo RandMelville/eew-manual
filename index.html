@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engineering Excellence Week · Arco</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    * { font-family: 'Inter', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    body { background-color: #080d1a; color: #e2e8f0; }
+
+    .glow-cyan  { box-shadow: 0 0 28px rgba(6,182,212,0.18); }
+    .glow-blue  { box-shadow: 0 0 28px rgba(59,130,246,0.18); }
+    .glow-green { box-shadow: 0 0 28px rgba(16,185,129,0.18); }
+    .glow-violet{ box-shadow: 0 0 28px rgba(139,92,246,0.18); }
+    .glow-amber { box-shadow: 0 0 28px rgba(245,158,11,0.18); }
+
+    .tab-btn { transition: all 0.2s ease; }
+    .tab-btn.active {
+      background: linear-gradient(135deg,#0e7490,#1d4ed8);
+      color:#fff; border-color:#06b6d4;
+    }
+
+    .timeline-line::before {
+      content:''; position:absolute; left:-1px; top:0; bottom:0;
+      width:2px;
+      background: linear-gradient(to bottom, #06b6d4, #3b82f6, #8b5cf6);
+    }
+
+    .day-content { display:none; }
+    .day-content.active { display:block; animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+    .pair-card { transition:all .25s ease; border:1px solid rgba(6,182,212,0.1); }
+    .pair-card:hover {
+      border-color:#06b6d4;
+      box-shadow:0 0 28px rgba(6,182,212,0.22),0 8px 32px rgba(0,0,0,0.5);
+      transform:translateY(-3px);
+    }
+
+    .repo-chip { transition:all .15s ease; }
+    .repo-chip:hover { background:rgba(6,182,212,0.18); border-color:#06b6d4; color:#67e8f9; }
+
+    .custom-check input[type="checkbox"] { display:none; }
+    .custom-check label {
+      display:flex; align-items:flex-start; gap:12px;
+      cursor:pointer; transition:all .2s;
+    }
+    .check-box {
+      width:22px; height:22px; min-width:22px; border-radius:6px;
+      border:2px solid #334155; background:#1e293b;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .2s ease; margin-top:1px;
+    }
+    .custom-check input:checked ~ label .check-box { background:#059669; border-color:#10b981; }
+    .custom-check input:checked ~ label .check-text { text-decoration:line-through; color:#475569; }
+    .check-mark { display:none; }
+    .custom-check input:checked ~ label .check-mark { display:block; }
+
+    .gradient-text {
+      background:linear-gradient(135deg,#06b6d4,#3b82f6);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .gradient-text-violet {
+      background:linear-gradient(135deg,#a78bfa,#6366f1);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+
+    .hero-bg {
+      background:
+        radial-gradient(ellipse at top center,rgba(6,182,212,0.1) 0%,transparent 60%),
+        radial-gradient(ellipse at bottom right,rgba(59,130,246,0.07) 0%,transparent 50%),
+        #080d1a;
+    }
+
+    .glass {
+      background:rgba(12,20,38,0.85);
+      backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,0.06);
+    }
+
+    .alert-victory {
+      background:linear-gradient(135deg,rgba(6,182,212,0.12),rgba(59,130,246,0.08));
+      border:1px solid rgba(6,182,212,0.4);
+      animation:pulse-border 2.5s infinite;
+    }
+    @keyframes pulse-border {
+      0%,100% { border-color:rgba(6,182,212,0.4); }
+      50%      { border-color:rgba(6,182,212,0.9); }
+    }
+
+    .ops-card {
+      background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(239,68,68,0.05));
+      border:1px solid rgba(245,158,11,0.2);
+      transition:all .2s;
+    }
+    .ops-card:hover { border-color:rgba(245,158,11,0.5); }
+
+    .produto-julia {
+      background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(59,130,246,0.07));
+      border:1px solid rgba(6,182,212,0.25);
+    }
+    .produto-antonio {
+      background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(99,102,241,0.07));
+      border:1px solid rgba(139,92,246,0.25);
+    }
+
+    .claude-card {
+      background:rgba(12,20,38,0.9);
+      border:1px solid rgba(6,182,212,0.12);
+      transition:all .2s;
+    }
+    .claude-card:hover { border-color:rgba(6,182,212,0.4); transform:translateY(-2px); }
+
+    .designer-card {
+      background:linear-gradient(135deg,rgba(139,92,246,0.08),rgba(99,102,241,0.05));
+      border:1px solid rgba(139,92,246,0.2);
+    }
+
+    .faq-item summary { cursor:pointer; list-style:none; }
+    .faq-item summary::-webkit-details-marker { display:none; }
+    .faq-item[open] summary .faq-icon { transform:rotate(90deg); }
+    .faq-icon { transition:transform .2s; }
+
+    .progress-step { position:relative; }
+    .progress-step::after {
+      content:''; position:absolute; top:50%; left:100%;
+      width:100%; height:2px;
+      background:rgba(255,255,255,0.06);
+      transform:translateY(-50%);
+    }
+    .progress-step:last-child::after { display:none; }
+    .progress-step.done::after { background:rgba(6,182,212,0.4); }
+
+    .manifesto-bg {
+      background:
+        radial-gradient(ellipse at center,rgba(6,182,212,0.07) 0%,transparent 70%),
+        linear-gradient(135deg,rgba(12,20,38,0.95),rgba(8,13,26,0.98));
+    }
+
+    .countdown-badge {
+      background:linear-gradient(135deg,#0e7490,#1e3a8a);
+      border:1px solid rgba(6,182,212,0.3);
+    }
+
+    @media (max-width:640px) {
+      .tab-btn { font-size:.72rem; padding:.45rem .65rem; }
+    }
+
+    /* ── Sticky Quick Links ─────────────────────────────── */
+    #sticky-bar {
+      position:fixed; top:0; left:0; right:0; z-index:50;
+      background:rgba(8,13,26,0.92);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(6,182,212,0.15);
+      transform:translateY(-100%);
+      transition:transform .3s ease;
+    }
+    #sticky-bar.visible { transform:translateY(0); }
+
+    /* ── Repo chip link ─────────────────────────────────── */
+    a.repo-chip {
+      display:flex; align-items:center; gap:6px;
+      text-decoration:none;
+    }
+    a.repo-chip:hover { background:rgba(6,182,212,0.18); border-color:#06b6d4; color:#67e8f9; }
+    a.repo-chip .gh-icon { opacity:.5; transition:opacity .15s; flex-shrink:0; }
+    a.repo-chip:hover .gh-icon { opacity:1; }
+
+    /* ── Link cards (Central de Links) ─────────────────── */
+    .link-card {
+      background:rgba(12,20,38,0.9);
+      border:1px solid rgba(255,255,255,0.06);
+      transition:all .2s;
+      text-decoration:none;
+      display:flex; align-items:flex-start; gap:12px;
+    }
+    .link-card:hover {
+      border-color:rgba(6,182,212,0.4);
+      transform:translateY(-2px);
+      box-shadow:0 0 20px rgba(6,182,212,0.12);
+    }
+    .link-card.sre:hover { border-color:rgba(245,158,11,0.5); box-shadow:0 0 20px rgba(245,158,11,0.1); }
+    .link-card.linear:hover { border-color:rgba(139,92,246,0.5); box-shadow:0 0 20px rgba(139,92,246,0.1); }
+  </style>
+</head>
+<body class="min-h-screen">
+
+<!-- ══════════════════════════════════════════════ STICKY BAR -->
+<div id="sticky-bar">
+  <div class="max-w-6xl mx-auto px-4 py-2 flex items-center gap-2 flex-wrap">
+    <span class="text-xs text-slate-500 font-semibold hidden sm:inline">Links rápidos:</span>
+    <a href="https://linear.app/isaac/project/eng-engineering-excellence-week-34de863fa56a/overview" target="_blank" rel="noopener"
+       class="flex items-center gap-1.5 text-xs text-violet-300 bg-violet-500/10 border border-violet-500/20 hover:border-violet-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
+      <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Linear EEW
+    </a>
+    <a href="https://docs.google.com/spreadsheets/d/1ZvZXjNWiKZF30ind1Ci8g8mAKM_TKzI0cyZrUZ01rZw/edit?gid=569570122#gid=569570122" target="_blank" rel="noopener"
+       class="flex items-center gap-1.5 text-xs text-green-300 bg-green-500/10 border border-green-500/20 hover:border-green-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
+      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      Planilha SRE
+    </a>
+    <a href="https://arcotecnologia.atlassian.net/browse/SRE-4161" target="_blank" rel="noopener"
+       class="flex items-center gap-1.5 text-xs text-amber-300 bg-amber-500/10 border border-amber-500/20 hover:border-amber-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
+      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      Jira SRE-4161
+    </a>
+    <a href="https://docs.google.com/document/d/157dF0NH1VMXpsGHk0JGVZjIk_9nKibJHO3miXci12Wc/edit?tab=t.uoxmfa16r35e" target="_blank" rel="noopener"
+       class="flex items-center gap-1.5 text-xs text-blue-300 bg-blue-500/10 border border-blue-500/20 hover:border-blue-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
+      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      Boas práticas Linear
+    </a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ HERO -->
+<header class="hero-bg border-b border-white/5">
+  <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+      <div>
+        <div class="flex items-center gap-3 mb-3 flex-wrap">
+          <span class="mono text-xs text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 px-3 py-1 rounded-full">Arco Tecnologia · 2026</span>
+          <span id="countdown-badge" class="countdown-badge mono text-xs text-cyan-300 px-3 py-1 rounded-full font-semibold">⏳ calculando...</span>
+          <a href="https://linear.app/isaac/project/eng-engineering-excellence-week-34de863fa56a/overview" target="_blank" rel="noopener"
+             class="mono text-xs text-violet-300 bg-violet-500/10 border border-violet-500/20 hover:border-violet-400 px-3 py-1 rounded-full font-semibold transition-colors no-underline flex items-center gap-1">
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            Linear EEW ↗
+          </a>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-black gradient-text leading-tight mb-2">Engineering<br>Excellence Week</h1>
+        <p class="text-slate-300 text-xl italic mt-3 font-light">"Afiar o machado para conquistar o Q2"</p>
+        <p class="text-slate-500 text-sm mt-3 mono">30/03 → 02/04/2026 &nbsp;·&nbsp; 2 squads · 5 duplas · 1 objetivo</p>
+      </div>
+
+      <!-- Pilares -->
+      <div class="grid grid-cols-2 gap-3 md:w-80">
+        <div class="glass rounded-xl p-3 flex items-center gap-2 hover:border-slate-500 transition-colors">
+          <span class="text-2xl">🔧</span>
+          <div><p class="text-xs font-bold text-slate-200">Maturidade Técnica</p><p class="text-xs text-slate-500">SRE checklist</p></div>
+        </div>
+        <div class="glass rounded-xl p-3 flex items-center gap-2 hover:border-slate-500 transition-colors">
+          <span class="text-2xl">🤖</span>
+          <div><p class="text-xs font-bold text-slate-200">IA & Nivelamento</p><p class="text-xs text-slate-500">Claude para todos</p></div>
+        </div>
+        <div class="glass rounded-xl p-3 flex items-center gap-2 hover:border-slate-500 transition-colors">
+          <span class="text-2xl">🚀</span>
+          <div><p class="text-xs font-bold text-slate-200">Autonomia</p><p class="text-xs text-slate-500">Wishlist liberada</p></div>
+        </div>
+        <div class="glass rounded-xl p-3 flex items-center gap-2 hover:border-slate-500 transition-colors">
+          <span class="text-2xl">🤝</span>
+          <div><p class="text-xs font-bold text-slate-200">Conexão</p><p class="text-xs text-slate-500">Squads cruzados</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manifesto rápido -->
+    <div class="manifesto-bg mt-8 rounded-2xl p-6 border border-cyan-500/15">
+      <p class="text-sm font-semibold text-cyan-300 mb-2 uppercase tracking-widest">Manifesto da Semana</p>
+      <p class="text-slate-300 leading-relaxed text-sm md:text-base">
+        Esta semana <strong class="text-white">não desenvolvemos novas features</strong>. Paramos para respirar, olhar para o que construímos e torná-lo melhor. As duplas são formadas por <strong class="text-cyan-400">um engenheiro de cada squad</strong> — conhecimento cruzado entre Atividades da Escola e Banco de Questões. <strong class="text-cyan-400">Sem títulos de senioridade</strong>, sem hierarquia. Apenas engenheiros resolvendo problemas juntos, com as melhores ferramentas disponíveis. Designers participam das sessões de alinhamento e do Demo Day.
+      </p>
+    </div>
+
+    <!-- Barra de progresso da semana -->
+    <div class="mt-6">
+      <p class="text-xs text-slate-600 mb-3 font-semibold uppercase tracking-wider">Progresso da Semana</p>
+      <div class="grid grid-cols-4 gap-2" id="week-progress">
+        <div class="progress-step" data-date="2026-03-30">
+          <div class="rounded-xl p-3 text-center border border-slate-700 bg-slate-800/40 progress-day-block">
+            <p class="text-xs font-bold text-slate-400">SEG</p>
+            <p class="text-xs text-slate-600 mono">30/03</p>
+            <p class="text-xs text-slate-500 mt-1">Kick-off</p>
+          </div>
+        </div>
+        <div class="progress-step" data-date="2026-03-31">
+          <div class="rounded-xl p-3 text-center border border-slate-700 bg-slate-800/40 progress-day-block">
+            <p class="text-xs font-bold text-slate-400">TER</p>
+            <p class="text-xs text-slate-600 mono">31/03</p>
+            <p class="text-xs text-slate-500 mt-1">IA & Código</p>
+          </div>
+        </div>
+        <div class="progress-step" data-date="2026-04-01">
+          <div class="rounded-xl p-3 text-center border border-slate-700 bg-slate-800/40 progress-day-block">
+            <p class="text-xs font-bold text-slate-400">QUA</p>
+            <p class="text-xs text-slate-600 mono">01/04</p>
+            <p class="text-xs text-slate-500 mt-1">SRE + Vitórias</p>
+          </div>
+        </div>
+        <div class="progress-step" data-date="2026-04-02">
+          <div class="rounded-xl p-3 text-center border border-slate-700 bg-slate-800/40 progress-day-block">
+            <p class="text-xs font-bold text-slate-400">QUI</p>
+            <p class="text-xs text-slate-600 mono">02/04</p>
+            <p class="text-xs text-slate-500 mt-1">Demo Day 🎉</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════ COMO USAR -->
+<section class="max-w-6xl mx-auto px-4 py-8">
+  <div class="glass rounded-2xl p-5 border border-blue-500/20 glow-blue">
+    <h2 class="text-base font-bold text-blue-300 mb-4 flex items-center gap-2"><span>📖</span> Como usar este manual</h2>
+    <div class="grid md:grid-cols-4 gap-4 text-sm text-slate-400">
+      <div class="flex items-start gap-2">
+        <span class="text-blue-400 font-bold mono shrink-0">1.</span>
+        <span><strong class="text-slate-300">Bookmark agora:</strong> Salve este arquivo no browser para consultar a qualquer momento durante a semana.</span>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="text-blue-400 font-bold mono shrink-0">2.</span>
+        <span><strong class="text-slate-300">Agenda do dia:</strong> Clique na aba do dia atual. O manual abre automaticamente no dia certo.</span>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="text-blue-400 font-bold mono shrink-0">3.</span>
+        <span><strong class="text-slate-300">Sua dupla:</strong> Role até os cards de duplas para ver repos e responsabilidades.</span>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="text-blue-400 font-bold mono shrink-0">4.</span>
+        <span><strong class="text-slate-300">Claude:</strong> Consulte a seção de boas práticas antes de começar qualquer tarefa com IA.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ CENTRAL DE LINKS -->
+<section class="max-w-6xl mx-auto px-4 pb-8">
+  <h2 class="text-xl font-bold text-white mb-5 flex items-center gap-2"><span class="text-cyan-400">🔗</span> Central de Links</h2>
+  <div class="grid md:grid-cols-3 gap-6">
+
+    <!-- SRE & Qualidade -->
+    <div>
+      <p class="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        SRE & Qualidade
+      </p>
+      <div class="space-y-2">
+        <a href="https://arcotecnologia.atlassian.net/browse/SRE-4161" target="_blank" rel="noopener"
+           class="link-card sre rounded-xl p-4 group">
+          <span class="text-xl shrink-0 group-hover:scale-110 transition-transform">🎫</span>
+          <div>
+            <p class="font-semibold text-white text-sm">Jira — SRE-4161</p>
+            <p class="text-xs text-slate-500 mt-0.5">Atividade de mapeamento SRE</p>
+            <p class="text-xs text-amber-500 mt-1.5 mono">arcotecnologia.atlassian.net ↗</p>
+          </div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1ZvZXjNWiKZF30ind1Ci8g8mAKM_TKzI0cyZrUZ01rZw/edit?gid=569570122#gid=569570122" target="_blank" rel="noopener"
+           class="link-card sre rounded-xl p-4 group">
+          <span class="text-xl shrink-0 group-hover:scale-110 transition-transform">📊</span>
+          <div>
+            <p class="font-semibold text-white text-sm">Planilha de Mapeamento SRE</p>
+            <p class="text-xs text-slate-500 mt-0.5">Checklist por repo — Nãos → Sims</p>
+            <p class="text-xs text-amber-500 mt-1.5 mono">docs.google.com ↗</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Linear -->
+    <div>
+      <p class="text-xs font-bold text-violet-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Linear
+      </p>
+      <div class="space-y-2">
+        <a href="https://linear.app/isaac/project/eng-engineering-excellence-week-34de863fa56a/overview" target="_blank" rel="noopener"
+           class="link-card linear rounded-xl p-4 group">
+          <span class="text-xl shrink-0 group-hover:scale-110 transition-transform">🎯</span>
+          <div>
+            <p class="font-semibold text-white text-sm">[ENG] Engineering Excellence Week</p>
+            <p class="text-xs text-slate-500 mt-0.5">Projeto oficial no Linear — tasks da semana</p>
+            <p class="text-xs text-violet-400 mt-1.5 mono">linear.app ↗</p>
+          </div>
+        </a>
+        <a href="https://docs.google.com/document/d/157dF0NH1VMXpsGHk0JGVZjIk_9nKibJHO3miXci12Wc/edit?tab=t.uoxmfa16r35e" target="_blank" rel="noopener"
+           class="link-card linear rounded-xl p-4 group">
+          <span class="text-xl shrink-0 group-hover:scale-110 transition-transform">📖</span>
+          <div>
+            <p class="font-semibold text-white text-sm">Boas práticas do Linear</p>
+            <p class="text-xs text-slate-500 mt-0.5">Como estruturar e usar o Linear no time</p>
+            <p class="text-xs text-violet-400 mt-1.5 mono">docs.google.com ↗</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Claude -->
+    <div>
+      <p class="text-xs font-bold text-cyan-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Claude & IA
+      </p>
+      <div class="space-y-2">
+        <a href="https://docs.anthropic.com/pt/docs/claude-code/overview" target="_blank" rel="noopener"
+           class="link-card rounded-xl p-4 group">
+          <span class="text-xl shrink-0 group-hover:scale-110 transition-transform">📚</span>
+          <div>
+            <p class="font-semibold text-white text-sm">Documentação Claude Code</p>
+            <p class="text-xs text-slate-500 mt-0.5">Guia oficial — comandos e agentes</p>
+            <p class="text-xs text-cyan-500 mt-1.5 mono">docs.anthropic.com ↗</p>
+          </div>
+        </a>
+        <a href="https://www.anthropic.com/engineering" target="_blank" rel="noopener"
+           class="link-card rounded-xl p-4 group">
+          <span class="text-xl shrink-0 group-hover:scale-110 transition-transform">⚙️</span>
+          <div>
+            <p class="font-semibold text-white text-sm">Anthropic Engineering Blog</p>
+            <p class="text-xs text-slate-500 mt-0.5">Como a Anthropic usa IA internamente</p>
+            <p class="text-xs text-cyan-500 mt-1.5 mono">anthropic.com/engineering ↗</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ AGENDA -->
+<section class="max-w-6xl mx-auto px-4 pb-8">
+  <h2 class="text-xl font-bold text-white mb-5 flex items-center gap-2"><span class="text-cyan-400">📅</span> Agenda da Semana</h2>
+
+  <!-- Tabs -->
+  <div class="flex gap-2 mb-6 flex-wrap">
+    <button class="tab-btn active rounded-xl px-4 py-2 text-sm font-semibold border border-cyan-500/30 text-slate-200 bg-slate-800" onclick="switchDay('seg',this)">Seg 30/03</button>
+    <button class="tab-btn rounded-xl px-4 py-2 text-sm font-semibold border border-transparent text-slate-400 bg-slate-800/50 hover:border-slate-600 hover:text-slate-200" onclick="switchDay('ter',this)">Ter 31/03</button>
+    <button class="tab-btn rounded-xl px-4 py-2 text-sm font-semibold border border-transparent text-slate-400 bg-slate-800/50 hover:border-slate-600 hover:text-slate-200" onclick="switchDay('qua',this)">Qua 01/04</button>
+    <button class="tab-btn rounded-xl px-4 py-2 text-sm font-semibold border border-transparent text-slate-400 bg-slate-800/50 hover:border-slate-600 hover:text-slate-200" onclick="switchDay('qui',this)">Qui 02/04</button>
+  </div>
+
+  <div class="glass rounded-2xl p-6">
+
+    <!-- ── SEG ──────────────────────────────────────────── -->
+    <div id="day-seg" class="day-content active">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">🚀</span>
+        <div>
+          <h3 class="font-bold text-white text-lg">Segunda-feira — Abertura & Alinhamento</h3>
+          <p class="text-slate-500 text-sm">30 de março · Entender o contexto, se conhecer e definir o que cada um vai fazer na semana</p>
+        </div>
+      </div>
+
+      <div class="relative pl-8 space-y-7 timeline-line">
+
+        <!-- 09:30 Kick-off -->
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">09:30 → 10:00</span>
+          <h4 class="font-semibold text-white mt-1">Abertura Oficial <span class="text-xs text-cyan-500 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2 py-0.5 ml-2">Kick-off</span></h4>
+          <p class="text-slate-400 text-sm mt-2 mb-3">A semana começa com quem criou essa iniciativa e quem lidera os dois times. Dois momentos em sequência, sem pausa entre eles.</p>
+          <div class="grid md:grid-cols-2 gap-3">
+            <div class="bg-slate-800/70 rounded-xl p-4 border border-cyan-500/20">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center font-bold text-cyan-300 text-xs shrink-0">RA</div>
+                <div>
+                  <p class="font-bold text-white text-sm">Rand <span class="text-cyan-400">· abre primeiro</span></p>
+                  <p class="text-xs text-cyan-400">Engineering Manager</p>
+                </div>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed">Explica por que essa semana existe, o que os dois times vão fazer juntos e o que se espera de cada pessoa ao final dos quatro dias.</p>
+            </div>
+            <div class="bg-slate-800/70 rounded-xl p-4 border border-slate-600/40">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-8 h-8 rounded-full bg-slate-600/40 border border-slate-500/30 flex items-center justify-center font-bold text-slate-300 text-xs shrink-0">GB</div>
+                <div>
+                  <p class="font-bold text-white text-sm">Gabs <span class="text-slate-400">· em seguida</span></p>
+                  <p class="text-xs text-slate-400">CTO</p>
+                </div>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed">Traz o contexto estratégico: onde a empresa quer chegar no Q2 e por que ter uma base técnica sólida agora é essencial para entregar o que vem pela frente.</p>
+            </div>
+          </div>
+          <div class="mt-3">
+            <a href="https://meet.google.com/dwj-hcvd-gje" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 bg-emerald-400/10 border border-emerald-400/25 rounded-lg px-3 py-1.5 hover:bg-emerald-400/20 transition-colors">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.08 4H4.92C3.86 4 3 4.86 3 5.92v12.16C3 19.14 3.86 20 4.92 20h14.16c1.06 0 1.92-.86 1.92-1.92V5.92C21 4.86 20.14 4 19.08 4zm-9.08 12H7v-2h3v2zm0-4H7v-2h3v2zm0-4H7V6h3v2zm7 8h-5v-2h5v2zm0-4h-5v-2h5v2zm0-4h-5V6h5v2z"/></svg>
+              Entrar na sala ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- 10:15 Voz da Ponta — EXPANDIDO -->
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-amber-400 ring-4 ring-amber-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">10:15 → 12:00</span>
+          <h4 class="font-semibold text-white mt-1">Voz da Ponta — Operações <span class="text-xs text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-full px-2 py-0.5 ml-2">Escuta Ativa</span></h4>
+          <p class="text-slate-400 text-sm mt-1 mb-3"><strong class="text-amber-300">Cadu, Igor, Renata e Rafaela</strong> do time de Operações vêm contar o que eles enfrentam no dia a dia usando os sistemas que vocês constroem. Eles apoiam escolas, professores e alunos — e são os primeiros a sentir quando algo quebra, está lento ou é difícil de usar.</p>
+
+          <div class="ops-card rounded-xl p-4 mb-3">
+            <p class="text-xs font-bold text-amber-300 mb-3 uppercase tracking-wider">O que se espera de você nessa sessão</p>
+            <div class="grid md:grid-cols-2 gap-3">
+              <div class="space-y-2">
+                <p class="text-xs text-slate-300 flex items-start gap-2"><span class="text-amber-400 shrink-0 mt-0.5">›</span> Ouvir sem interromper. Eles vão trazer situações reais — não é hora de defender decisões técnicas.</p>
+                <p class="text-xs text-slate-300 flex items-start gap-2"><span class="text-amber-400 shrink-0 mt-0.5">›</span> Anotar o que você ouvir. Cada dor relatada é um candidato direto para a sua Wishlist da semana.</p>
+              </div>
+              <div class="space-y-2">
+                <p class="text-xs text-slate-300 flex items-start gap-2"><span class="text-amber-400 shrink-0 mt-0.5">›</span> Perguntar o contexto quando não entender. "Quando isso acontece?" e "Qual o impacto pra escola?" são boas perguntas.</p>
+                <p class="text-xs text-slate-300 flex items-start gap-2"><span class="text-amber-400 shrink-0 mt-0.5">›</span> Conectar o que ouvir com o checklist SRE. Muitas dores de Ops têm raiz em falta de observabilidade ou bugs silenciosos.</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-500 mt-2 italic">Presença confirmada: <strong class="text-amber-400">Cadu, Igor, Renata e Rafaela</strong> — equipe de Operações.</p>
+        </div>
+
+        <!-- 14:00 README Humano -->
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-blue-400 ring-4 ring-blue-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">14:00 → 15:00</span>
+          <h4 class="font-semibold text-white mt-1">README Humano — Quem você é além do código</h4>
+          <p class="text-slate-400 text-sm mt-1 mb-4">Esqueça cargo, squad e tecnologias por um momento. Aqui a pergunta é simpler: <strong class="text-white">quem é você como pessoa?</strong> As duplas vão passar quatro dias intensos juntas — quanto mais conexão humana existir, melhor tudo flui. Cada pessoa tem 2-3 minutos. Sem slides, sem preparação. Pode falar de cabeça.</p>
+
+          <!-- Exemplo do Rand -->
+          <div class="bg-slate-800/60 rounded-xl p-5 border border-cyan-500/20 mb-4">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-7 h-7 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center font-bold text-cyan-300 text-xs shrink-0">RA</div>
+              <p class="text-xs font-bold text-cyan-300">Exemplo real — README do Rand</p>
+              <span class="text-xs text-slate-600 italic">(Engineering Manager, idealizador da semana)</span>
+            </div>
+            <div class="grid md:grid-cols-2 gap-x-8 gap-y-2 text-xs">
+              <p class="text-slate-300 flex items-start gap-2"><span class="text-cyan-400 shrink-0">📍</span><span>Sou de <strong class="text-white">Roraima</strong>, moro em <strong class="text-white">Porto Alegre</strong> e tenho uma casa em <strong class="text-white">Blumenau</strong>.</span></p>
+              <p class="text-slate-300 flex items-start gap-2"><span class="text-cyan-400 shrink-0">🐱</span><span>Tenho <strong class="text-white">2 gatas</strong> que ficam em Blumenau enquanto trabalho em POA.</span></p>
+              <p class="text-slate-300 flex items-start gap-2"><span class="text-cyan-400 shrink-0">🍞</span><span>Já fui <strong class="text-white">padeiro e confeiteiro</strong>. Ainda gosto muito de cozinhar.</span></p>
+              <p class="text-slate-300 flex items-start gap-2"><span class="text-cyan-400 shrink-0">💪</span><span>Faço <strong class="text-white">musculação</strong> — é onde desligo a cabeça do trabalho.</span></p>
+              <p class="text-slate-300 flex items-start gap-2 md:col-span-2"><span class="text-amber-400 shrink-0">🏷️</span><span><strong class="text-amber-300">Curiosidade:</strong> já tive o apelido de <strong class="text-white">"Chamequinho da marca de papel"</strong>. Sim, esse era o meu apelido de verdade.</span></p>
+            </div>
+          </div>
+
+          <!-- Template para preencher -->
+          <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-700">
+            <p class="text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">Template — copie e preencha o seu</p>
+            <div class="space-y-1.5 text-xs mono text-slate-500">
+              <p><span class="text-slate-600">📍</span> <span class="text-slate-400">De onde eu vim / onde moro:</span> <span class="text-slate-600">___</span></p>
+              <p><span class="text-slate-600">❤️</span> <span class="text-slate-400">O que faço quando não estou no computador:</span> <span class="text-slate-600">___</span></p>
+              <p><span class="text-slate-600">🙋</span> <span class="text-slate-400">Uma coisa que pouca gente sabe sobre mim:</span> <span class="text-slate-600">___</span></p>
+              <p><span class="text-slate-600">🔥</span> <span class="text-slate-400">O que me deixa animado (fora de trabalho):</span> <span class="text-slate-600">___</span></p>
+              <p><span class="text-slate-600">🏷️</span> <span class="text-slate-400">Minha curiosidade / fun fact:</span> <span class="text-slate-600">___</span></p>
+            </div>
+            <p class="text-xs text-slate-600 mt-3 italic">Cole no chat antes de falar, ou compartilhe na tela. O mais importante é ser genuíno — pode ser engraçado, pode ser sério.</p>
+          </div>
+        </div>
+
+        <!-- 15:15 Linear Battle Plan -->
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-purple-400 ring-4 ring-purple-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">15:00 → 17:00</span>
+          <h4 class="font-semibold text-white mt-1">Linear Battle Plan — Setup de Tasks</h4>
+          <p class="text-slate-400 text-sm mt-1">Cada dupla cria suas tasks no Linear para a semana: itens do checklist SRE + melhorias da Wishlist. Ao final dessa sessão, todo mundo sai com um plano claro do que vai executar nos próximos três dias.</p>
+          <div class="flex flex-wrap gap-2 mt-3">
+            <a href="https://linear.app/isaac/project/eng-engineering-excellence-week-34de863fa56a/overview" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-1.5 text-xs text-violet-300 bg-violet-500/10 border border-violet-500/20 hover:border-violet-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
+              <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              Projeto EEW no Linear ↗
+            </a>
+            <a href="https://docs.google.com/document/d/157dF0NH1VMXpsGHk0JGVZjIk_9nKibJHO3miXci12Wc/edit?tab=t.uoxmfa16r35e" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-1.5 text-xs text-blue-300 bg-blue-500/10 border border-blue-500/20 hover:border-blue-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
+              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              Boas práticas do Linear ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TER ──────────────────────────────────────────── -->
+    <div id="day-ter" class="day-content">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">🤖</span>
+        <div>
+          <h3 class="font-bold text-white text-lg">Terça-feira — IA & Código</h3>
+          <p class="text-slate-500 text-sm">31 de março · Aprender a usar Claude na prática e aplicar nos repos no mesmo dia</p>
+        </div>
+      </div>
+      <div class="relative pl-8 space-y-7 timeline-line">
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">09:30 → 12:00</span>
+          <h4 class="font-semibold text-white mt-1">Workshop: Masterizando o Claude <span class="text-xs text-cyan-500 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2 py-0.5 ml-2">Convidado Especial</span></h4>
+          <p class="text-slate-400 text-sm mt-2 mb-4">Dois momentos em sequência: primeiro o alicerce conceitual, depois a prática real nos repos. Você sai desse workshop com uma forma diferente de usar a IA no seu dia a dia como engenheiro.</p>
+
+          <div class="grid md:grid-cols-2 gap-3 mb-4">
+            <div class="bg-slate-800/70 rounded-xl p-4 border border-cyan-500/20">
+              <div class="flex items-center gap-2 mb-3">
+                <div class="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center font-bold text-cyan-300 text-xs shrink-0">RA</div>
+                <div>
+                  <p class="font-bold text-white text-sm">Rand <span class="text-cyan-400">· abre</span></p>
+                  <p class="text-xs text-cyan-400">Engineering Manager</p>
+                </div>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed mb-2">Nivelamento de IA para engenheiros: como a IA realmente funciona na prática e por que a forma como você escreve o prompt muda tudo.</p>
+              <div class="space-y-1">
+                <p class="text-xs text-slate-500 flex items-center gap-1.5"><span class="text-cyan-400">›</span> Engenharia de Prompt — como estruturar pedidos que funcionam</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1.5"><span class="text-cyan-400">›</span> Engenharia de Contexto — o que o Claude precisa saber para ajudar bem</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1.5"><span class="text-cyan-400">›</span> Artefatos do Claude — quando e como usá-los</p>
+              </div>
+            </div>
+
+            <div class="bg-slate-800/70 rounded-xl p-4 border border-slate-600/40">
+              <div class="flex items-center gap-2 mb-3">
+                <div class="w-8 h-8 rounded-full bg-slate-600/40 border border-slate-500/30 flex items-center justify-center font-bold text-slate-300 text-xs shrink-0">VI</div>
+                <div>
+                  <p class="font-bold text-white text-sm">Vitão <span class="text-slate-400">· prática</span></p>
+                  <p class="text-xs text-slate-400">Convidado Especial</p>
+                </div>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed mb-2">Mão na massa com os repos reais do time. Como usar IA para atacar débitos técnicos com segurança e gerar testes de verdade.</p>
+              <div class="space-y-1">
+                <p class="text-xs text-slate-500 flex items-center gap-1.5"><span class="text-slate-400">›</span> Refatorando débitos técnicos com IA — sem quebrar o que já funciona</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1.5"><span class="text-slate-400">›</span> Gerando testes de qualidade — além do autocomplete</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1.5"><span class="text-slate-400">›</span> Exemplos ao vivo com código do time</p>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 italic">Consulte a seção "Claude: Boas Práticas" mais abaixo para ter a referência completa durante a semana.</p>
+        </div>
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-green-400 ring-4 ring-green-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">14:00 → 18:00</span>
+          <h4 class="font-semibold text-white mt-1">Execução — Código com IA</h4>
+          <p class="text-slate-400 text-sm mt-1">Tarde livre para as duplas trabalharem nos repos usando o que aprenderam de manhã. Cada dupla define o que vai atacar — pode ser refatoração, testes sem cobertura, documentação ou itens da Wishlist.</p>
+          <div class="mt-3 bg-slate-800/60 rounded-xl p-4 border border-slate-700">
+            <p class="text-xs font-semibold text-slate-300 mb-3">O que você pode fazer com o Claude nessa sessão:</p>
+            <div class="grid md:grid-cols-2 gap-2">
+              <p class="text-xs text-slate-400 flex items-center gap-2"><span class="text-cyan-400">›</span> <code class="mono bg-slate-700 px-1 rounded">/review</code> para revisar PRs abertas</p>
+              <p class="text-xs text-slate-400 flex items-center gap-2"><span class="text-cyan-400">›</span> Gerar testes unitários para funções sem cobertura</p>
+              <p class="text-xs text-slate-400 flex items-center gap-2"><span class="text-cyan-400">›</span> Escrever ou melhorar o README do seu repo</p>
+              <p class="text-xs text-slate-400 flex items-center gap-2"><span class="text-cyan-400">›</span> Documentar código legado com o agente Reverse Engineering</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── QUA ──────────────────────────────────────────── -->
+    <div id="day-qua" class="day-content">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">🔭</span>
+        <div>
+          <h3 class="font-bold text-white text-lg">Quarta-feira — Observabilidade & Vitórias</h3>
+          <p class="text-slate-500 text-sm">01 de abril · SRE + registrar o que foi feito antes de esquecer</p>
+        </div>
+      </div>
+
+      <div class="alert-victory rounded-xl p-4 mb-6 flex items-start gap-3">
+        <span class="text-2xl shrink-0">🏆</span>
+        <div>
+          <p class="font-bold text-cyan-300 text-sm">AÇÃO OBRIGATÓRIA — Doc de Vitórias</p>
+          <p class="text-slate-300 text-sm mt-1">Até as <strong>12h</strong>, cada dupla preenche o Top 3 de melhorias por repo no <strong>Doc Compartilhado de Vitórias</strong>. Isso é o legado permanente da semana — não pode faltar!</p>
+        </div>
+      </div>
+
+      <div class="relative pl-8 space-y-7 timeline-line">
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">09:30 → 10:30</span>
+          <h4 class="font-semibold text-white mt-1">Sessão SRE — Execução Colaborativa</h4>
+          <p class="text-slate-400 text-sm mt-1 mb-3">O bate-papo com o SRE já aconteceu. Agora é hora de colocar em prática. Cada pessoa abre a planilha de mapeamento, os docs do SRE e os canais de alerta do seu repo — e o grupo trabalha junto, compartilhando tela, discutindo o que encontra e garantindo que tudo está configurado e alinhado.</p>
+          <div class="bg-slate-800/60 rounded-xl p-4 border border-slate-700 mb-3">
+            <p class="text-xs font-semibold text-slate-300 mb-2">O que fazer nessa sessão:</p>
+            <div class="space-y-1.5">
+              <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 shrink-0">›</span> Abrir a planilha de mapeamento e localizar as linhas do seu repo</p>
+              <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 shrink-0">›</span> Varrer os canais de alertas — existe canal? Está funcionando? Os alertas fazem sentido?</p>
+              <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 shrink-0">›</span> Compartilhar o que você encontrou no chat — dúvidas, lacunas e vitórias valem igualmente</p>
+              <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 shrink-0">›</span> Discutir em grupo quando algo estiver confuso — não resolva sozinho o que pode ser resolvido junto</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <a href="https://arcotecnologia.atlassian.net/browse/SRE-4161" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-1.5 text-xs text-amber-300 bg-amber-500/10 border border-amber-500/20 hover:border-amber-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
+              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Jira SRE-4161 ↗
+            </a>
+            <a href="https://docs.google.com/spreadsheets/d/1ZvZXjNWiKZF30ind1Ci8g8mAKM_TKzI0cyZrUZ01rZw/edit?gid=569570122#gid=569570122" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-1.5 text-xs text-green-300 bg-green-500/10 border border-green-500/20 hover:border-green-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
+              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              Planilha de Mapeamento SRE ↗
+            </a>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-yellow-400 ring-4 ring-yellow-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">10:30 → 12:00</span>
+          <h4 class="font-semibold text-white mt-1">Documentação das Vitórias <span class="text-xs text-yellow-500 bg-yellow-500/10 border border-yellow-500/20 rounded-full px-2 py-0.5 ml-2">Top 3 por repo</span></h4>
+          <p class="text-slate-400 text-sm mt-1">Cada dupla preenche o Doc de Vitórias com as 3 principais melhorias feitas nos repos. Não precisa ser longo — o que era antes, o que mudou e qual o impacto já é suficiente.</p>
+        </div>
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-green-400 ring-4 ring-green-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">14:00 → 18:00</span>
+          <h4 class="font-semibold text-white mt-1">Execução — SRE + Wishlist</h4>
+          <p class="text-slate-400 text-sm mt-1">Tarde para concluir os itens SRE que ainda estão pendentes e avançar nas melhorias da Wishlist. Cada dupla decide a ordem de acordo com o que falta para zerar o checklist.</p>
+          <a href="https://docs.google.com/spreadsheets/d/1ZvZXjNWiKZF30ind1Ci8g8mAKM_TKzI0cyZrUZ01rZw/edit?gid=569570122#gid=569570122" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-1.5 mt-3 text-xs text-green-300 bg-green-500/10 border border-green-500/20 hover:border-green-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            Planilha SRE — acompanhar seu progresso ↗
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── QUI ──────────────────────────────────────────── -->
+    <div id="day-qui" class="day-content">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">🎯</span>
+        <div>
+          <h3 class="font-bold text-white text-lg">Quinta-feira — Visão Q2 & Demo Day</h3>
+          <p class="text-slate-500 text-sm">02 de abril · Para onde vamos + celebrar o que construímos</p>
+        </div>
+      </div>
+      <div class="relative pl-8 space-y-7 timeline-line">
+
+        <!-- 09:30 Visão Q2 — EXPANDIDO com Julia & Antonio separados -->
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">09:30 → 11:00</span>
+          <h4 class="font-semibold text-white mt-1">Visão Q2 — Produto <span class="text-xs text-cyan-500 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2 py-0.5 ml-2">Julia & Antonio</span></h4>
+          <p class="text-slate-400 text-sm mt-2 mb-4">Dois PMs, dois produtos. Julia apresenta o que vem pela frente em Atividades da Escola; Antonio traz o roadmap do Banco de Questões. Entender o que o produto precisa entregar no Q2 muda a forma como você pensa nas decisões técnicas.</p>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <!-- Julia -->
+            <div class="produto-julia rounded-xl p-4">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center font-bold text-cyan-300 text-sm shrink-0">JU</div>
+                <div>
+                  <p class="font-bold text-white text-sm">Julia</p>
+                  <p class="text-xs text-cyan-400">Product Manager · Atividades da Escola</p>
+                </div>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed mb-3">Julia traz o roadmap do produto de <strong class="text-cyan-300">Atividades da Escola</strong> para o Q2 — as funcionalidades planejadas, as dores dos professores e alunos que queremos resolver, e como a estabilidade técnica construída essa semana impacta diretamente a entrega dessas features.</p>
+              <div class="space-y-1">
+                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-cyan-400">›</span> O que escolas esperam no Q2</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-cyan-400">›</span> Principais dores mapeadas em campo</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-cyan-400">›</span> Como a engenharia habilita o produto</p>
+              </div>
+            </div>
+
+            <!-- Antonio -->
+            <div class="produto-antonio rounded-xl p-4">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 rounded-full bg-violet-500/20 border border-violet-500/30 flex items-center justify-center font-bold text-violet-300 text-sm shrink-0">AN</div>
+                <div>
+                  <p class="font-bold text-white text-sm">Antonio</p>
+                  <p class="text-xs text-violet-400">Product Manager · Banco de Questões</p>
+                </div>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed mb-3">Antonio apresenta a visão do <strong class="text-violet-300">Banco de Questões</strong> para o Q2 — a estratégia de conteúdo, as integrações planejadas e como a qualidade do backend que vocês estão melhorando essa semana é a base para tudo que vem aí.</p>
+              <div class="space-y-1">
+                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-violet-400">›</span> Evolução da plataforma de questões</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-violet-400">›</span> Integrações e parceiros Q2</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-violet-400">›</span> Como dados e IA entram no produto</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 bg-slate-800/50 rounded-xl p-3 border border-slate-700">
+            <p class="text-xs text-slate-400 italic flex items-start gap-2">
+              <span class="text-yellow-400 shrink-0">💡</span>
+              <span>Escute com o chapéu de engenheiro. Identifique onde a saúde técnica que vocês estão construindo essa semana diretamente habilita o que Julia e Antonio precisam entregar. Leve essa conexão para o Demo Day.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- 11:00 Sprint Planning -->
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-blue-400 ring-4 ring-blue-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">11:00 → 12:30</span>
+          <h4 class="font-semibold text-white mt-1">Sprint Planning Q2</h4>
+          <p class="text-slate-400 text-sm mt-1">Primeira planning do novo ciclo. Com o contexto de produto fresco e a base técnica construída durante a semana, as squads entram no Q2 sabendo o que precisam entregar e com a casa arrumada para fazer isso.</p>
+        </div>
+
+        <!-- 14:00 Demo Day -->
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">14:00 → 17:00</span>
+          <h4 class="font-semibold text-white mt-1">Demo Day <span class="text-cyan-400">🎉</span></h4>
+          <p class="text-slate-400 text-sm mt-2 mb-4">O grande momento da semana. Cada dupla tem <strong class="text-white">~15 minutos</strong> para mostrar o que fez — sem burocracia, com orgulho. Não é apresentação corporativa: é contar uma história de antes e depois.</p>
+
+          <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div class="bg-slate-800/60 rounded-xl p-4 border border-cyan-500/20">
+              <p class="text-xs font-bold text-cyan-300 mb-3">📋 Estrutura sugerida (~15 min/dupla)</p>
+              <div class="space-y-2">
+                <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 mono shrink-0">1.</span> <span><strong class="text-slate-200">O que vocês atacaram</strong> — qual era o problema ou a melhoria escolhida</span></p>
+                <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 mono shrink-0">2.</span> <span><strong class="text-slate-200">O antes</strong> — como estava, por que incomodava</span></p>
+                <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 mono shrink-0">3.</span> <span><strong class="text-slate-200">O depois</strong> — o que mudou, com números se tiver</span></p>
+                <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 mono shrink-0">4.</span> <span><strong class="text-slate-200">O aprendizado da dupla</strong> — o que cada um aprendeu com o outro</span></p>
+              </div>
+            </div>
+            <div class="bg-slate-800/60 rounded-xl p-4 border border-slate-700">
+              <p class="text-xs font-bold text-slate-300 mb-3">💡 O que você pode mostrar</p>
+              <div class="space-y-1.5">
+                <p class="text-xs text-slate-400 flex items-center gap-2"><span class="text-green-400">›</span> Um PR aberto com a mudança — código fala por si</p>
+                <p class="text-xs text-slate-400 flex items-center gap-2"><span class="text-green-400">›</span> A planilha SRE antes e depois (Não → Sim)</p>
+                <p class="text-xs text-slate-400 flex items-center gap-2"><span class="text-green-400">›</span> Um gráfico de tempo de resposta ou cobertura de testes</p>
+                <p class="text-xs text-slate-400 flex items-center gap-2"><span class="text-green-400">›</span> O README novo do repo vs o que tinha antes</p>
+                <p class="text-xs text-slate-400 flex items-center gap-2"><span class="text-green-400">›</span> O Doc de Vitórias já preenchido</p>
+                <p class="text-xs text-slate-400 flex items-center gap-2"><span class="text-amber-400">›</span> Um terminal rodando os testes que não existiam na segunda</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl p-4 border border-yellow-500/20" style="background:linear-gradient(135deg,rgba(234,179,8,0.08),rgba(245,158,11,0.05));">
+            <p class="text-xs font-bold text-yellow-300 mb-2 flex items-center gap-2">🏅 Votação no final</p>
+            <p class="text-xs text-slate-400">Após todas as apresentações, o time vota em categorias como <strong class="text-white">"Melhoria mais impactante"</strong>, <strong class="text-white">"Dupla mais criativa"</strong> e <strong class="text-white">"Melhor storytelling"</strong>. Não tem prêmio físico — o reconhecimento do time já vale muito.</p>
+          </div>
+        </div>
+
+        <!-- 17:00 Happy Hour -->
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-pink-400 ring-4 ring-pink-400/20"></div>
+          <span class="mono text-xs text-cyan-400 font-semibold">17:00 → livre</span>
+          <h4 class="font-semibold text-white mt-1">Encerramento & Happy Hour 🍻</h4>
+          <p class="text-slate-400 text-sm mt-1">Fim da semana. Momento de celebrar o que foi construído, agradecer quem tornou isso possível e entrar no Q2 com energia renovada. Sem pauta, sem computador.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ DUPLAS E REPOS -->
+<section class="max-w-6xl mx-auto px-4 pb-8">
+  <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2"><span class="text-cyan-400">👥</span> Duplas & Repositórios</h2>
+  <p class="text-slate-500 text-sm mb-6">Um integrante de cada squad por dupla. Os repos listados são responsabilidade da dupla durante a semana.</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+    <div class="pair-card rounded-2xl p-5 bg-slate-900/80">
+      <div class="flex items-center justify-between mb-4">
+        <span class="mono text-xs text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 px-2 py-1 rounded-full font-semibold">Dupla 01</span>
+        <span class="text-slate-600 text-xs">Frontend</span>
+      </div>
+      <h3 class="font-bold text-white text-lg mb-1">Loy & Saulo</h3>
+      <p class="text-slate-500 text-xs mb-4">Atividades da Escola ↔ Banco de Questões</p>
+      <div class="space-y-2">
+        <a href="https://github.com/arcotech-services/avl-portal-platform-frontend" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>avl-portal-platform-frontend</a>
+        <a href="https://github.com/arcotech-services/avl-broadcast-bff" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>avl-broadcast-bff</a>
+      </div>
+    </div>
+
+    <div class="pair-card rounded-2xl p-5 bg-slate-900/80">
+      <div class="flex items-center justify-between mb-4">
+        <span class="mono text-xs text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 px-2 py-1 rounded-full font-semibold">Dupla 02</span>
+        <span class="text-slate-600 text-xs">Full-stack</span>
+      </div>
+      <h3 class="font-bold text-white text-lg mb-1">Maycon & Cami</h3>
+      <p class="text-slate-500 text-xs mb-4">Atividades da Escola ↔ Banco de Questões</p>
+      <div class="space-y-2">
+        <a href="https://github.com/arcotech-services/avl-activity-backend" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>avl-activity-backend</a>
+        <a href="https://github.com/arcotech-services/avl-activity-bff" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>avl-activity-bff</a>
+        <a href="https://github.com/arcotech-services/at-doc-adapter" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>at-doc-adapter</a>
+      </div>
+    </div>
+
+    <div class="pair-card rounded-2xl p-5 bg-slate-900/80">
+      <div class="flex items-center justify-between mb-4">
+        <span class="mono text-xs text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 px-2 py-1 rounded-full font-semibold">Dupla 03</span>
+        <span class="text-slate-600 text-xs">Full-stack</span>
+      </div>
+      <h3 class="font-bold text-white text-lg mb-1">Anjos & Duda</h3>
+      <p class="text-slate-500 text-xs mb-4">Atividades da Escola ↔ Banco de Questões</p>
+      <div class="space-y-2">
+        <a href="https://github.com/arcotech-services/at-packages-questions-db-frontend" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>at-packages-questions-db-frontend</a>
+        <a href="https://github.com/arcotech-services/cdo-ia-teacher-frontend" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>cdo-ia-teacher-frontend</a>
+        <a href="https://github.com/arcotech-services/cdo-ia-teacher-backend" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>cdo-ia-teacher-backend</a>
+      </div>
+    </div>
+
+    <div class="pair-card rounded-2xl p-5 bg-slate-900/80">
+      <div class="flex items-center justify-between mb-4">
+        <span class="mono text-xs text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 px-2 py-1 rounded-full font-semibold">Dupla 04</span>
+        <span class="text-slate-600 text-xs">Backend</span>
+      </div>
+      <h3 class="font-bold text-white text-lg mb-1">Paixão & Tesarro</h3>
+      <p class="text-slate-500 text-xs mb-4">Atividades da Escola ↔ Banco de Questões</p>
+      <div class="space-y-2">
+        <a href="https://github.com/arcotech-services/platform-answers-backend" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>platform-answers-backend</a>
+        <a href="https://github.com/arcotech-services/avl-adaptation-engine-backend" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>avl-adaptation-engine-backend</a>
+        <a href="https://github.com/arcotech-services/avl-question-api" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>avl-question-api</a>
+      </div>
+    </div>
+
+    <div class="pair-card rounded-2xl p-5 bg-slate-900/80 md:col-span-2 lg:col-span-1">
+      <div class="flex items-center justify-between mb-4">
+        <span class="mono text-xs text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 px-2 py-1 rounded-full font-semibold">Dupla 05</span>
+        <span class="text-slate-600 text-xs">Backend</span>
+      </div>
+      <h3 class="font-bold text-white text-lg mb-1">Mateus & Jose</h3>
+      <p class="text-slate-500 text-xs mb-4">Atividades da Escola ↔ Banco de Questões</p>
+      <div class="space-y-2">
+        <a href="https://github.com/arcotech-services/avl-access-manager-backend" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>avl-access-manager-backend</a>
+        <a href="https://github.com/arcotech-services/at-questions-sdk" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>at-questions-sdk</a>
+        <a href="https://github.com/arcotech-services/avl-student-event-tracking-backend" target="_blank" rel="noopener" class="repo-chip mono text-xs text-slate-400 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"><svg class="gh-icon w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>avl-student-event-tracking-backend</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════ CLAUDE: BOAS PRÁTICAS -->
+<section class="max-w-6xl mx-auto px-4 pb-8">
+  <div class="flex items-center gap-3 mb-5">
+    <h2 class="text-xl font-bold text-white flex items-center gap-2"><span class="text-cyan-400">🤖</span> Claude: Guia de Boas Práticas</h2>
+    <span class="text-xs text-cyan-500 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2 py-1">ferramenta oficial da semana</span>
+  </div>
+  <p class="text-slate-500 text-sm mb-6">Claude Code é a ferramenta principal desta semana para os engenheiros. Abaixo estão os recursos essenciais e as práticas que fazem a diferença no dia a dia.</p>
+
+  <!-- Links de Referência -->
+  <div class="grid md:grid-cols-3 gap-4 mb-6">
+    <a href="https://docs.anthropic.com/pt/docs/claude-code/overview" target="_blank" rel="noopener"
+       class="claude-card rounded-xl p-4 flex items-start gap-3 no-underline group">
+      <span class="text-2xl group-hover:scale-110 transition-transform">📚</span>
+      <div>
+        <p class="font-semibold text-white text-sm">Documentação Oficial</p>
+        <p class="text-xs text-slate-500 mt-1">Guia completo do Claude Code — comandos, configurações e recursos avançados.</p>
+        <p class="text-xs text-cyan-500 mt-2 mono">docs.anthropic.com ↗</p>
+      </div>
+    </a>
+    <a href="https://www.anthropic.com/engineering" target="_blank" rel="noopener"
+       class="claude-card rounded-xl p-4 flex items-start gap-3 no-underline group">
+      <span class="text-2xl group-hover:scale-110 transition-transform">⚙️</span>
+      <div>
+        <p class="font-semibold text-white text-sm">Anthropic Engineering Blog</p>
+        <p class="text-xs text-slate-500 mt-1">Como a Anthropic usa IA internamente. Benchmarks, casos de uso reais e insights técnicos.</p>
+        <p class="text-xs text-cyan-500 mt-2 mono">anthropic.com/engineering ↗</p>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/@anthropic-ai" target="_blank" rel="noopener"
+       class="claude-card rounded-xl p-4 flex items-start gap-3 no-underline group">
+      <span class="text-2xl group-hover:scale-110 transition-transform">🎥</span>
+      <div>
+        <p class="font-semibold text-white text-sm">Canal Anthropic no YouTube</p>
+        <p class="text-xs text-slate-500 mt-1">Demos, walkthroughs e tutoriais em vídeo do Claude Code para referência visual.</p>
+        <p class="text-xs text-cyan-500 mt-2 mono">youtube.com/@anthropic-ai ↗</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- Boas práticas para devs -->
+  <div class="glass rounded-2xl p-6 mb-4 glow-cyan">
+    <p class="text-sm font-bold text-cyan-300 mb-4 uppercase tracking-wider">Para Desenvolvedores</p>
+    <div class="grid md:grid-cols-2 gap-x-8 gap-y-3">
+      <div>
+        <p class="text-xs font-semibold text-slate-200 mb-1">Contexto é tudo</p>
+        <p class="text-xs text-slate-400">Sempre dê ao Claude o contexto do que está sendo construído, stack usada e restrições. Quanto mais contexto, melhor o resultado.</p>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-slate-200 mb-1">Peça revisão antes de commitar</p>
+        <p class="text-xs text-slate-400">Use <code class="mono bg-slate-700 px-1 rounded text-cyan-400">/review</code> para que o Claude analise segurança, performance e boas práticas antes de qualquer PR.</p>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-slate-200 mb-1">Agentes especializados</p>
+        <p class="text-xs text-slate-400">Use o agente <strong>Reverse Engineering</strong> para documentar código legado, <strong>Kotlin Lead</strong> para backend e <strong>TS Reviewer</strong> para frontend.</p>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-slate-200 mb-1">Testes primeiro</p>
+        <p class="text-xs text-slate-400">Peça ao Claude para gerar testes unitários para código existente. Depois revise e ajuste. É mais rápido que escrever do zero.</p>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-slate-200 mb-1">Não aceite cegamente</p>
+        <p class="text-xs text-slate-400">Sempre leia o que o Claude sugeriu. IA erra. Você é o responsável pelo código que vai para produção.</p>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-slate-200 mb-1">CLAUDE.md por repo</p>
+        <p class="text-xs text-slate-400">Crie um arquivo <code class="mono bg-slate-700 px-1 rounded text-cyan-400">CLAUDE.md</code> na raiz do repo com contexto do projeto. O Claude lê automaticamente.</p>
+      </div>
+    </div>
+
+    <div class="mt-5 bg-slate-800/60 rounded-xl p-4 border border-slate-700">
+      <p class="text-xs font-bold text-slate-300 mb-3">Comandos mais úteis para essa semana:</p>
+      <div class="grid md:grid-cols-3 gap-3">
+        <div>
+          <code class="mono text-xs text-cyan-400 bg-slate-900 px-2 py-1 rounded block mb-1">/review</code>
+          <p class="text-xs text-slate-500">Revisão completa de código</p>
+        </div>
+        <div>
+          <code class="mono text-xs text-cyan-400 bg-slate-900 px-2 py-1 rounded block mb-1">/commit</code>
+          <p class="text-xs text-slate-500">Commit com mensagem gerada</p>
+        </div>
+        <div>
+          <code class="mono text-xs text-cyan-400 bg-slate-900 px-2 py-1 rounded block mb-1">subagent: Explore</code>
+          <p class="text-xs text-slate-500">Explorar codebase desconhecida</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boas práticas para designers -->
+  <div class="designer-card rounded-2xl p-6 glow-violet">
+    <p class="text-sm font-bold gradient-text-violet mb-1 uppercase tracking-wider">Para Designers</p>
+    <p class="text-xs text-slate-400 mb-3">Os designers participam das sessões de abertura, alinhamento de produto e do Demo Day. O foco da semana é engenharia, mas a presença deles nas sessões coletivas é importante para manter a visão de produto e design conectada ao que está sendo construído.</p>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="bg-black/20 rounded-xl p-3 border border-white/5">
+        <p class="text-xs font-semibold text-violet-300 mb-1">Sessões que participam</p>
+        <ul class="text-xs text-slate-400 space-y-1">
+          <li>· Kick-off (Seg 09:30)</li>
+          <li>· Voz da Ponta (Seg 10:00)</li>
+          <li>· README Humano (Seg 14:00)</li>
+          <li>· Visão Q2 (Qui 09:30)</li>
+          <li>· Demo Day (Qui 15:30)</li>
+          <li>· Happy Hour (Qui 17:00)</li>
+        </ul>
+      </div>
+      <div class="bg-black/20 rounded-xl p-3 border border-white/5 md:col-span-2">
+        <p class="text-xs font-semibold text-violet-300 mb-1">Como contribuem</p>
+        <p class="text-xs text-slate-400">Nas sessões de escuta e alinhamento, a perspectiva de design enriquece a leitura do que Ops e Produto trazem. No Demo Day, são parte da audiência que avalia o impacto real das melhorias técnicas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ LEGADO -->
+<section class="max-w-6xl mx-auto px-4 pb-8">
+  <div class="rounded-2xl p-6 border border-cyan-500/30 glow-cyan"
+       style="background:linear-gradient(135deg,rgba(6,182,212,0.07),rgba(30,58,138,0.1));">
+    <div class="flex items-start gap-4">
+      <span class="text-4xl">🏛️</span>
+      <div class="flex-1">
+        <h2 class="text-xl font-bold text-cyan-300 mb-2">Legado: O Doc de Vitórias</h2>
+        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+          A semana passa. O código fica. Mas o <em>porquê</em> das mudanças some rapidamente da memória.
+          O <strong class="text-cyan-400">Doc de Vitórias</strong> é o artefato permanente que conecta o esforço desta semana ao futuro da plataforma.
+        </p>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-black/30 rounded-xl p-4 border border-white/5">
+            <p class="text-cyan-400 font-bold text-sm mb-2">📝 O que registrar</p>
+            <ul class="text-xs text-slate-400 space-y-1">
+              <li>· Nome do repo</li>
+              <li>· Top 3 melhorias realizadas</li>
+              <li>· Antes vs. depois (métrica se possível)</li>
+              <li>· Link do PR ou commit</li>
+            </ul>
+          </div>
+          <div class="bg-black/30 rounded-xl p-4 border border-white/5">
+            <p class="text-yellow-400 font-bold text-sm mb-2">⏰ Quando</p>
+            <p class="text-xs text-slate-400">Quarta-feira <strong class="text-yellow-300">01/04 até 12h</strong>. A sessão de 10:30 é dedicada exatamente para isso — não pulce.</p>
+          </div>
+          <div class="bg-black/30 rounded-xl p-4 border border-white/5">
+            <p class="text-green-400 font-bold text-sm mb-2">💡 Por que importa</p>
+            <p class="text-xs text-slate-400">Insumo direto para o Demo Day, para comunicar stakeholders e para o próximo dev que tocar nesses repos saber o que mudou e por quê.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ DEFINITION OF DONE -->
+<section class="max-w-6xl mx-auto px-4 pb-8">
+  <h2 class="text-xl font-bold text-white mb-5 flex items-center gap-2"><span class="text-cyan-400">✅</span> Definition of Done — Semana Concluída</h2>
+  <div class="glass rounded-2xl p-6 space-y-4">
+    <p class="text-slate-500 text-sm mb-4">Marque cada item conforme a dupla avança. Objetivo: chegar na quinta com tudo verde.</p>
+
+    <div class="custom-check">
+      <input type="checkbox" id="dod1">
+      <label for="dod1" class="p-4 bg-slate-800/60 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
+        <div class="check-box"><svg class="check-mark w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+        <div><p class="font-semibold text-slate-200 check-text">Checklist SRE 100% Verde</p><p class="text-xs text-slate-500 mt-0.5">Todos os "Nãos" de observabilidade, CI/CD e segurança viraram "Sims" nos repos da dupla.</p></div>
+      </label>
+    </div>
+
+    <div class="custom-check">
+      <input type="checkbox" id="dod2">
+      <label for="dod2" class="p-4 bg-slate-800/60 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
+        <div class="check-box"><svg class="check-mark w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+        <div><p class="font-semibold text-slate-200 check-text">Ao menos 1 item da Wishlist concluído por repo</p><p class="text-xs text-slate-500 mt-0.5">Uma melhoria que sempre quiseram fazer, finalmente entregue.</p></div>
+      </label>
+    </div>
+
+    <div class="custom-check">
+      <input type="checkbox" id="dod3">
+      <label for="dod3" class="p-4 bg-slate-800/60 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
+        <div class="check-box"><svg class="check-mark w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+        <div><p class="font-semibold text-slate-200 check-text">Doc de Vitórias preenchido — Top 3 por repo</p><p class="text-xs text-slate-500 mt-0.5">Preenchido até 12h de quarta (01/04). Cada repo com contexto de antes/depois.</p></div>
+      </label>
+    </div>
+
+    <div class="custom-check">
+      <input type="checkbox" id="dod4">
+      <label for="dod4" class="p-4 bg-slate-800/60 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
+        <div class="check-box"><svg class="check-mark w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+        <div><p class="font-semibold text-slate-200 check-text">PRs documentados e READMEs atualizados</p><p class="text-xs text-slate-500 mt-0.5">Toda mudança estrutural tem PR com descrição clara. READMEs refletem o estado atual.</p></div>
+      </label>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ FAQ -->
+<section class="max-w-6xl mx-auto px-4 pb-8">
+  <h2 class="text-xl font-bold text-white mb-5 flex items-center gap-2"><span class="text-cyan-400">❓</span> Perguntas Frequentes</h2>
+  <div class="space-y-3">
+
+    <details class="faq-item glass rounded-xl border border-slate-700 hover:border-slate-500 transition-colors">
+      <summary class="p-4 flex items-center justify-between">
+        <span class="text-sm font-semibold text-slate-200">E se a dupla não conseguir terminar tudo na semana?</span>
+        <svg class="faq-icon w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </summary>
+      <div class="px-4 pb-4 text-sm text-slate-400 border-t border-slate-700 pt-3">
+        Tudo bem. O objetivo não é zerar o checklist a qualquer custo — é fazer progresso real e com qualidade. Priorize pelo impacto: o que vai melhorar mais a vida da Ops e dos usuários? Comece por isso.
+      </div>
+    </details>
+
+    <details class="faq-item glass rounded-xl border border-slate-700 hover:border-slate-500 transition-colors">
+      <summary class="p-4 flex items-center justify-between">
+        <span class="text-sm font-semibold text-slate-200">Como funcionam os repos que não são "da dupla"?</span>
+        <svg class="faq-icon w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </summary>
+      <div class="px-4 pb-4 text-sm text-slate-400 border-t border-slate-700 pt-3">
+        Os repos listados em cada dupla são a responsabilidade primária. Mas se outra dupla precisar de ajuda ou se você tiver expertise em outro repo, colabore livremente — o cruzamento de conhecimento é exatamente o objetivo.
+      </div>
+    </details>
+
+    <details class="faq-item glass rounded-xl border border-slate-700 hover:border-slate-500 transition-colors">
+      <summary class="p-4 flex items-center justify-between">
+        <span class="text-sm font-semibold text-slate-200">Eu nunca usei Claude Code. Como começo?</span>
+        <svg class="faq-icon w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </summary>
+      <div class="px-4 pb-4 text-sm text-slate-400 border-t border-slate-700 pt-3">
+        O Workshop de terça-feira (31/03 às 09:30) cobre do zero ao avançado. Antes disso, instale o Claude Code (<code class="mono bg-slate-700 px-1 rounded text-cyan-400">npm i -g @anthropic-ai/claude-code</code>) e leia a seção de boas práticas deste manual. Em 30 minutos você já está operacional.
+      </div>
+    </details>
+
+    <details class="faq-item glass rounded-xl border border-slate-700 hover:border-slate-500 transition-colors">
+      <summary class="p-4 flex items-center justify-between">
+        <span class="text-sm font-semibold text-slate-200">O que é esperado dos designers na semana?</span>
+        <svg class="faq-icon w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </summary>
+      <div class="px-4 pb-4 text-sm text-slate-400 border-t border-slate-700 pt-3">
+        Os designers participam das sessões coletivas: Kick-off, Voz da Ponta, README Humano, Visão Q2, Demo Day e Happy Hour. O foco da semana é engenharia — a presença dos designers nas sessões de alinhamento é para manter a visão de produto e experiência conectada ao que está sendo construído.
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/5 py-8 mt-4">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div>
+      <p class="text-slate-600 text-xs mono">engineering-excellence-week.html · Arco Tecnologia · 2026</p>
+      <p class="text-slate-700 text-xs mt-1">30/03 – 02/04 · Atividades da Escola + Banco de Questões</p>
+    </div>
+    <p class="text-slate-600 text-xs italic text-center md:text-right">"A gente não para de melhorar porque fica velho.<br>A gente fica velho porque para de melhorar."</p>
+  </div>
+</footer>
+
+<script>
+  // ─── Tab switching ───────────────────────────────────────────
+  function switchDay(day, btn) {
+    document.querySelectorAll('.day-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.classList.add('text-slate-400','bg-slate-800/50','border-transparent');
+      b.classList.remove('text-slate-200','bg-slate-800');
+    });
+    document.getElementById('day-'+day).classList.add('active');
+    btn.classList.add('active');
+    btn.classList.remove('text-slate-400','bg-slate-800/50','border-transparent');
+    btn.classList.add('text-slate-200','bg-slate-800');
+  }
+
+  // ─── Auto-select today ───────────────────────────────────────
+  (function() {
+    const today = new Date();
+    const d = today.getDay();
+    const tabs = document.querySelectorAll('.tab-btn');
+    const map = { 1:0, 2:1, 3:2, 4:3 };
+    if (map[d] !== undefined) tabs[map[d]].click();
+  })();
+
+  // ─── Countdown badge ─────────────────────────────────────────
+  (function() {
+    const start = new Date('2026-03-30T09:00:00');
+    const end   = new Date('2026-04-02T20:00:00');
+    const now   = new Date();
+    const badge = document.getElementById('countdown-badge');
+    if (now < start) {
+      const days = Math.ceil((start-now)/(1000*60*60*24));
+      badge.textContent = `⏳ em ${days} dia${days!==1?'s':''}`;
+    } else if (now>=start && now<=end) {
+      badge.textContent='🟢 acontecendo agora!';
+      badge.style.background='linear-gradient(135deg,#065f46,#064e3b)';
+      badge.style.borderColor='rgba(16,185,129,0.5)';
+      badge.style.color='#6ee7b7';
+    } else {
+      badge.textContent='✅ concluída';
+      badge.style.background='rgba(30,41,59,0.8)';
+      badge.style.color='#64748b';
+    }
+  })();
+
+  // ─── Sticky bar on scroll ────────────────────────────────────
+  (function() {
+    const bar = document.getElementById('sticky-bar');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 100) {
+        bar.classList.add('visible');
+      } else {
+        bar.classList.remove('visible');
+      }
+    }, { passive: true });
+  })();
+
+  // ─── Progress bar highlight ──────────────────────────────────
+  (function() {
+    const days = ['2026-03-30','2026-03-31','2026-04-01','2026-04-02'];
+    const today = new Date().toISOString().slice(0,10);
+    document.querySelectorAll('.progress-step').forEach((el,i)=>{
+      const d = el.dataset.date;
+      const block = el.querySelector('.progress-day-block');
+      if (d < today) {
+        block.classList.add('bg-green-900/30','border-green-500/30');
+        block.querySelector('p').classList.replace('text-slate-400','text-green-400');
+      } else if (d === today) {
+        block.classList.remove('bg-slate-800/40','border-slate-700');
+        block.classList.add('border-cyan-500/60');
+        block.style.background='linear-gradient(135deg,rgba(6,182,212,0.15),rgba(59,130,246,0.1))';
+        const label = block.querySelector('p');
+        label.classList.replace('text-slate-400','text-cyan-300');
+        label.textContent='HOJE';
+      }
+    });
+  })();
+</script>
+</body>
+</html>
