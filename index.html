@@ -120,6 +120,11 @@
       border:1px solid rgba(139,92,246,0.2);
     }
 
+    .timeline-session-active {
+      background:rgba(6,182,212,0.05);
+      box-shadow:0 0 0 2px rgba(6,182,212,0.35);
+    }
+
     .faq-item summary { cursor:pointer; list-style:none; }
     .faq-item summary::-webkit-details-marker { display:none; }
     .faq-item[open] summary .faq-icon { transform:rotate(90deg); }
@@ -264,6 +269,16 @@
       </p>
     </div>
 
+    <!-- Banner de blindagem -->
+    <div class="mt-6 rounded-2xl p-5 border border-yellow-500/30 flex items-start gap-4" style="background:linear-gradient(135deg,rgba(234,179,8,0.07),rgba(245,158,11,0.04));">
+      <span class="text-2xl shrink-0">🛡️</span>
+      <div>
+        <p class="font-bold text-yellow-300 text-sm mb-1">Time blindado durante a semana</p>
+        <p class="text-slate-300 text-sm leading-relaxed">Durante esta semana, <strong class="text-yellow-200">Rand, Julia e Antonio</strong> estarão monitorando ativamente bugs e problemas de produção. O time pode focar 100% no que importa — se algo crítico surgir, acionaremos quem for necessário sem interromper o fluxo dos demais.</p>
+        <p class="text-slate-400 text-xs mt-2">Algo urgente? <strong class="text-yellow-300">Fale com Rand no Slack</strong> antes de tentar resolver sozinho.</p>
+      </div>
+    </div>
+
     <!-- Barra de progresso da semana -->
     <div class="mt-6">
       <p class="text-xs text-slate-600 mb-3 font-semibold uppercase tracking-wider">Progresso da Semana</p>
@@ -312,7 +327,7 @@
       </div>
       <div class="flex items-start gap-2">
         <span class="text-blue-400 font-bold mono shrink-0">2.</span>
-        <span><strong class="text-slate-300">Agenda do dia:</strong> Clique na aba do dia atual. O manual abre automaticamente no dia certo.</span>
+        <span><strong class="text-slate-300">Agenda do dia:</strong> O manual sempre abre na Segunda. Navegue pelas abas conforme a semana avança.</span>
       </div>
       <div class="flex items-start gap-2">
         <span class="text-blue-400 font-bold mono shrink-0">3.</span>
@@ -418,6 +433,56 @@
   </div>
 </section>
 
+<!-- ════════════════════════════════════════════ PRÉ-REQUISITOS -->
+<section class="max-w-6xl mx-auto px-4 pb-8">
+  <h2 class="text-xl font-bold text-white mb-5 flex items-center gap-2"><span class="text-green-400">✅</span> Antes de começar — Valide seus acessos</h2>
+  <p class="text-slate-500 text-sm mb-5">Garanta estes acessos <strong class="text-slate-300">antes da segunda-feira</strong>. Qualquer problema, acione antes do evento começar.</p>
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+    <div class="glass rounded-xl p-4 border border-slate-700 flex items-start gap-3">
+      <span class="text-green-400 text-lg shrink-0">✅</span>
+      <div>
+        <p class="text-sm font-semibold text-slate-200">Acesso de escrita nos repos</p>
+        <p class="text-xs text-slate-500 mt-1">Verifique se consegue fazer push nos repos da sua dupla. Teste com um branch antes do evento.</p>
+      </div>
+    </div>
+    <div class="glass rounded-xl p-4 border border-slate-700 flex items-start gap-3">
+      <span class="text-green-400 text-lg shrink-0">✅</span>
+      <div>
+        <p class="text-sm font-semibold text-slate-200">Claude Code instalado</p>
+        <p class="text-xs text-slate-500 mt-1">Instale e autentique: <code class="mono bg-slate-800 px-1 rounded text-cyan-400">npm i -g @anthropic-ai/claude-code</code> — depois rode <code class="mono bg-slate-800 px-1 rounded text-cyan-400">claude --version</code></p>
+      </div>
+    </div>
+    <div class="glass rounded-xl p-4 border border-slate-700 flex items-start gap-3">
+      <span class="text-green-400 text-lg shrink-0">✅</span>
+      <div>
+        <p class="text-sm font-semibold text-slate-200">Acesso ao Linear</p>
+        <p class="text-xs text-slate-500 mt-1">Conta ativa no Linear com acesso ao projeto EEW. Confirme que consegue criar tasks.</p>
+      </div>
+    </div>
+    <div class="glass rounded-xl p-4 border border-slate-700 flex items-start gap-3">
+      <span class="text-green-400 text-lg shrink-0">✅</span>
+      <div>
+        <p class="text-sm font-semibold text-slate-200">Planilha SRE e Jira</p>
+        <p class="text-xs text-slate-500 mt-1">Acesso à <a href="https://docs.google.com/spreadsheets/d/1ZvZXjNWiKZF30ind1Ci8g8mAKM_TKzI0cyZrUZ01rZw/edit?gid=569570122#gid=569570122" target="_blank" rel="noopener" class="text-amber-400 hover:underline">Planilha de Mapeamento SRE</a> e ao <a href="https://arcotecnologia.atlassian.net/browse/SRE-4161" target="_blank" rel="noopener" class="text-amber-400 hover:underline">Jira SRE-4161</a>.</p>
+      </div>
+    </div>
+    <div class="glass rounded-xl p-4 border border-slate-700 flex items-start gap-3">
+      <span class="text-green-400 text-lg shrink-0">✅</span>
+      <div>
+        <p class="text-sm font-semibold text-slate-200">Ambiente local funcionando</p>
+        <p class="text-xs text-slate-500 mt-1">Suba o projeto localmente e rode os testes antes da segunda. Sem ambiente funcional, a semana trava.</p>
+      </div>
+    </div>
+    <div class="glass rounded-xl p-4 border border-slate-700 flex items-start gap-3">
+      <span class="text-green-400 text-lg shrink-0">✅</span>
+      <div>
+        <p class="text-sm font-semibold text-slate-200">Conhece sua dupla?</p>
+        <p class="text-xs text-slate-500 mt-1">Localize sua dupla na seção abaixo e os repos sob responsabilidade de vocês. Uma mensagem antes já quebra o gelo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════════════════════════════════════════ AGENDA -->
 <section class="max-w-6xl mx-auto px-4 pb-8">
   <h2 class="text-xl font-bold text-white mb-5 flex items-center gap-2"><span class="text-cyan-400">📅</span> Agenda da Semana</h2>
@@ -448,7 +513,7 @@
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">09:30 → 10:00</span>
-          <h4 class="font-semibold text-white mt-1">Abertura Oficial <span class="text-xs text-cyan-500 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2 py-0.5 ml-2">Kick-off</span></h4>
+          <h4 class="font-semibold text-white mt-1">Abertura Oficial <span class="text-xs text-cyan-500 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2 py-0.5 ml-2">Kick-off</span><span class="text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/25 rounded-full px-2 py-0.5 ml-1">🟢 Ao Vivo</span></h4>
           <p class="text-slate-400 text-sm mt-2 mb-3">A semana começa com quem criou essa iniciativa e quem lidera os dois times. Dois momentos em sequência, sem pausa entre eles.</p>
           <div class="grid md:grid-cols-2 gap-3">
             <div class="bg-slate-800/70 rounded-xl p-4 border border-cyan-500/20">
@@ -484,7 +549,7 @@
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-amber-400 ring-4 ring-amber-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">10:15 → 12:00</span>
-          <h4 class="font-semibold text-white mt-1">Voz da Ponta — Operações <span class="text-xs text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-full px-2 py-0.5 ml-2">Escuta Ativa</span></h4>
+          <h4 class="font-semibold text-white mt-1">Voz da Ponta — Operações <span class="text-xs text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-full px-2 py-0.5 ml-2">Escuta Ativa</span><span class="text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/25 rounded-full px-2 py-0.5 ml-1">🟢 Ao Vivo</span></h4>
           <p class="text-slate-400 text-sm mt-1 mb-3"><strong class="text-amber-300">Cadu, Igor, Renata e Rafaela</strong> do time de Operações vêm contar o que eles enfrentam no dia a dia usando os sistemas que vocês constroem. Eles apoiam escolas, professores e alunos — e são os primeiros a sentir quando algo quebra, está lento ou é difícil de usar.</p>
 
           <div class="ops-card rounded-xl p-4 mb-3">
@@ -508,8 +573,12 @@
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-blue-400 ring-4 ring-blue-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">14:00 → 15:00</span>
-          <h4 class="font-semibold text-white mt-1">README Humano — Quem você é além do código</h4>
-          <p class="text-slate-400 text-sm mt-1 mb-4">Esqueça cargo, squad e tecnologias por um momento. Aqui a pergunta é simpler: <strong class="text-white">quem é você como pessoa?</strong> As duplas vão passar quatro dias intensos juntas — quanto mais conexão humana existir, melhor tudo flui. Cada pessoa tem 2-3 minutos. Sem slides, sem preparação. Pode falar de cabeça.</p>
+          <h4 class="font-semibold text-white mt-1">README Humano — Quem você é além do código <span class="text-xs text-violet-400 bg-violet-400/10 border border-violet-400/25 rounded-full px-2 py-0.5 ml-2">⚡ Async</span></h4>
+          <p class="text-slate-400 text-sm mt-1 mb-3">Esqueça cargo, squad e tecnologias por um momento. Aqui a pergunta é simpler: <strong class="text-white">quem é você como pessoa?</strong> As duplas vão passar quatro dias intensos juntas — quanto mais conexão humana existir, melhor tudo flui.</p>
+          <div class="bg-violet-500/5 border border-violet-500/20 rounded-xl px-4 py-2.5 mb-3 flex items-center gap-2">
+            <span class="text-violet-400 text-sm shrink-0">⚡</span>
+            <p class="text-xs text-slate-400">Não há sala Meet — preencha o template abaixo no seu próprio ritmo e compartilhe no canal da equipe. Cada pessoa cola o seu antes das 15h.</p>
+          </div>
 
           <!-- Exemplo do Rand -->
           <div class="bg-slate-800/60 rounded-xl p-5 border border-cyan-500/20 mb-4">
@@ -545,8 +614,12 @@
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-purple-400 ring-4 ring-purple-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">15:00 → 17:00</span>
-          <h4 class="font-semibold text-white mt-1">Linear Battle Plan — Setup de Tasks</h4>
-          <p class="text-slate-400 text-sm mt-1">Cada dupla cria suas tasks no Linear para a semana: itens do checklist SRE + melhorias da Wishlist. Ao final dessa sessão, todo mundo sai com um plano claro do que vai executar nos próximos três dias.</p>
+          <h4 class="font-semibold text-white mt-1">Linear Battle Plan — Setup de Tasks <span class="text-xs text-yellow-400 bg-yellow-400/10 border border-yellow-400/25 rounded-full px-2 py-0.5 ml-2">🟡 Híbrido</span></h4>
+          <p class="text-slate-400 text-sm mt-1 mb-3">Cada dupla cria suas tasks no Linear para a semana: itens do checklist SRE + melhorias da Wishlist. Ao final, todo mundo sai com um plano claro do que vai executar nos próximos três dias.</p>
+          <div class="bg-yellow-500/5 border border-yellow-500/20 rounded-xl px-4 py-2.5 mb-3 flex items-center gap-2">
+            <span class="text-yellow-400 text-sm shrink-0">🟡</span>
+            <p class="text-xs text-slate-400"><strong class="text-yellow-300">15:00–15:30 — sala aberta</strong> para alinhar critérios em grupo. Depois cada dupla trabalha de forma independente. Sem obrigação de estar na sala o tempo todo.</p>
+          </div>
           <div class="flex flex-wrap gap-2 mt-3">
             <a href="https://linear.app/isaac/project/eng-engineering-excellence-week-34de863fa56a/overview" target="_blank" rel="noopener"
                class="inline-flex items-center gap-1.5 text-xs text-violet-300 bg-violet-500/10 border border-violet-500/20 hover:border-violet-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
@@ -576,7 +649,7 @@
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">09:30 → 12:00</span>
-          <h4 class="font-semibold text-white mt-1">Workshop: Masterizando o Claude <span class="text-xs text-cyan-500 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2 py-0.5 ml-2">Convidado Especial</span></h4>
+          <h4 class="font-semibold text-white mt-1">Workshop: Masterizando o Claude <span class="text-xs text-cyan-500 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2 py-0.5 ml-2">Convidado Especial</span><span class="text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/25 rounded-full px-2 py-0.5 ml-1">🟢 Ao Vivo</span></h4>
           <p class="text-slate-400 text-sm mt-2 mb-4">Dois momentos em sequência: primeiro o alicerce conceitual, depois a prática real nos repos. Você sai desse workshop com uma forma diferente de usar a IA no seu dia a dia como engenheiro.</p>
 
           <div class="grid md:grid-cols-2 gap-3 mb-4">
@@ -617,8 +690,12 @@
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-green-400 ring-4 ring-green-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">14:00 → 18:00</span>
-          <h4 class="font-semibold text-white mt-1">Execução — Código com IA</h4>
-          <p class="text-slate-400 text-sm mt-1">Tarde livre para as duplas trabalharem nos repos usando o que aprenderam de manhã. Cada dupla define o que vai atacar — pode ser refatoração, testes sem cobertura, documentação ou itens da Wishlist.</p>
+          <h4 class="font-semibold text-white mt-1">Execução — Código com IA <span class="text-xs text-violet-400 bg-violet-400/10 border border-violet-400/25 rounded-full px-2 py-0.5 ml-2">⚡ Async</span></h4>
+          <p class="text-slate-400 text-sm mt-1 mb-3">Tarde livre para as duplas trabalharem nos repos usando o que aprenderam de manhã. Cada dupla define o que vai atacar — pode ser refatoração, testes sem cobertura, documentação ou itens da Wishlist.</p>
+          <div class="bg-violet-500/5 border border-violet-500/20 rounded-xl px-4 py-2.5 mb-3 flex items-center gap-2">
+            <span class="text-violet-400 text-sm shrink-0">⚡</span>
+            <p class="text-xs text-slate-400">Não há sala Meet — cada dupla trabalha no próprio ambiente. Use o Slack para dúvidas ou para compartilhar achados com o grupo.</p>
+          </div>
           <div class="mt-3 bg-slate-800/60 rounded-xl p-4 border border-slate-700">
             <p class="text-xs font-semibold text-slate-300 mb-3">O que você pode fazer com o Claude nessa sessão:</p>
             <div class="grid md:grid-cols-2 gap-2">
@@ -654,7 +731,7 @@
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">09:30 → 10:30</span>
-          <h4 class="font-semibold text-white mt-1">Sessão SRE — Execução Colaborativa</h4>
+          <h4 class="font-semibold text-white mt-1">Sessão SRE — Execução Colaborativa <span class="text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/25 rounded-full px-2 py-0.5 ml-2">🟢 Ao Vivo</span></h4>
           <p class="text-slate-400 text-sm mt-1 mb-3">O bate-papo com o SRE já aconteceu. Agora é hora de colocar em prática. Cada pessoa abre a planilha de mapeamento, os docs do SRE e os canais de alerta do seu repo — e o grupo trabalha junto, compartilhando tela, discutindo o que encontra e garantindo que tudo está configurado e alinhado.</p>
           <div class="bg-slate-800/60 rounded-xl p-4 border border-slate-700 mb-3">
             <p class="text-xs font-semibold text-slate-300 mb-2">O que fazer nessa sessão:</p>
@@ -681,14 +758,18 @@
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-yellow-400 ring-4 ring-yellow-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">10:30 → 12:00</span>
-          <h4 class="font-semibold text-white mt-1">Documentação das Vitórias <span class="text-xs text-yellow-500 bg-yellow-500/10 border border-yellow-500/20 rounded-full px-2 py-0.5 ml-2">Top 3 por repo</span></h4>
+          <h4 class="font-semibold text-white mt-1">Documentação das Vitórias <span class="text-xs text-yellow-500 bg-yellow-500/10 border border-yellow-500/20 rounded-full px-2 py-0.5 ml-2">Top 3 por repo</span><span class="text-xs text-violet-400 bg-violet-400/10 border border-violet-400/25 rounded-full px-2 py-0.5 ml-1">⚡ Async</span></h4>
           <p class="text-slate-400 text-sm mt-1">Cada dupla preenche o Doc de Vitórias com as 3 principais melhorias feitas nos repos. Não precisa ser longo — o que era antes, o que mudou e qual o impacto já é suficiente.</p>
         </div>
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-green-400 ring-4 ring-green-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">14:00 → 18:00</span>
-          <h4 class="font-semibold text-white mt-1">Execução — SRE + Wishlist</h4>
-          <p class="text-slate-400 text-sm mt-1">Tarde para concluir os itens SRE que ainda estão pendentes e avançar nas melhorias da Wishlist. Cada dupla decide a ordem de acordo com o que falta para zerar o checklist.</p>
+          <h4 class="font-semibold text-white mt-1">Execução — SRE + Wishlist <span class="text-xs text-violet-400 bg-violet-400/10 border border-violet-400/25 rounded-full px-2 py-0.5 ml-2">⚡ Async</span></h4>
+          <p class="text-slate-400 text-sm mt-1 mb-3">Tarde para concluir os itens SRE que ainda estão pendentes e avançar nas melhorias da Wishlist. Cada dupla decide a ordem de acordo com o que falta para zerar o checklist.</p>
+          <div class="bg-violet-500/5 border border-violet-500/20 rounded-xl px-4 py-2.5 mb-3 flex items-center gap-2">
+            <span class="text-violet-400 text-sm shrink-0">⚡</span>
+            <p class="text-xs text-slate-400">Não há sala Meet — duplas trabalham de forma independente nos repos. Use o Slack para compartilhar progresso ou pedir ajuda ao grupo.</p>
+          </div>
           <a href="https://docs.google.com/spreadsheets/d/1ZvZXjNWiKZF30ind1Ci8g8mAKM_TKzI0cyZrUZ01rZw/edit?gid=569570122#gid=569570122" target="_blank" rel="noopener"
              class="inline-flex items-center gap-1.5 mt-3 text-xs text-green-300 bg-green-500/10 border border-green-500/20 hover:border-green-400 px-3 py-1.5 rounded-lg transition-colors no-underline">
             <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
@@ -712,8 +793,8 @@
         <!-- 09:30 Visão Q2 — EXPANDIDO com Julia & Antonio separados -->
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20"></div>
-          <span class="mono text-xs text-cyan-400 font-semibold">09:30 → 11:00</span>
-          <h4 class="font-semibold text-white mt-1">Visão Q2 — Produto <span class="text-xs text-cyan-500 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2 py-0.5 ml-2">Julia & Antonio</span></h4>
+          <span class="mono text-xs text-cyan-400 font-semibold">09:30 → 11:30</span>
+          <h4 class="font-semibold text-white mt-1">Visão Q2 — Produto <span class="text-xs text-cyan-500 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2 py-0.5 ml-2">Julia & Antonio</span><span class="text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/25 rounded-full px-2 py-0.5 ml-1">🟢 Ao Vivo</span></h4>
           <p class="text-slate-400 text-sm mt-2 mb-4">Dois PMs, dois produtos. Julia apresenta o que vem pela frente em Atividades da Escola; Antonio traz o roadmap do Banco de Questões. Entender o que o produto precisa entregar no Q2 muda a forma como você pensa nas decisões técnicas.</p>
 
           <div class="grid md:grid-cols-2 gap-4">
@@ -743,11 +824,11 @@
                   <p class="text-xs text-violet-400">Product Manager · Banco de Questões</p>
                 </div>
               </div>
-              <p class="text-xs text-slate-400 leading-relaxed mb-3">Antonio apresenta a visão do <strong class="text-violet-300">Banco de Questões</strong> para o Q2 — a estratégia de conteúdo, as integrações planejadas e como a qualidade do backend que vocês estão melhorando essa semana é a base para tudo que vem aí.</p>
+              <p class="text-xs text-slate-400 leading-relaxed mb-3">Antônio apresenta a visão do <strong class="text-violet-300">Banco de Questões</strong> para 2027 e o foco do time para Q2 — a estratégia de produto conectada com o escopo do time e com as evoluções que vem sendo construídas ao longo do trimestre.</p>
               <div class="space-y-1">
-                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-violet-400">›</span> Evolução da plataforma de questões</p>
-                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-violet-400">›</span> Integrações e parceiros Q2</p>
-                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-violet-400">›</span> Como dados e IA entram no produto</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-violet-400">›</span> Visão de produto para 2027</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-violet-400">›</span> Foco e escopo do time no Q2</p>
+                <p class="text-xs text-slate-500 flex items-center gap-1"><span class="text-violet-400">›</span> Evoluções construídas ao longo do trimestre</p>
               </div>
             </div>
           </div>
@@ -760,19 +841,22 @@
           </div>
         </div>
 
-        <!-- 11:00 Sprint Planning -->
-        <div class="relative">
-          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-blue-400 ring-4 ring-blue-400/20"></div>
-          <span class="mono text-xs text-cyan-400 font-semibold">11:00 → 12:30</span>
-          <h4 class="font-semibold text-white mt-1">Sprint Planning Q2</h4>
-          <p class="text-slate-400 text-sm mt-1">Primeira planning do novo ciclo. Com o contexto de produto fresco e a base técnica construída durante a semana, as squads entram no Q2 sabendo o que precisam entregar e com a casa arrumada para fazer isso.</p>
+        <!-- 14:00 Demo Day —— card de preparação -->
+        <div class="bg-slate-800/50 rounded-xl p-4 border border-cyan-500/15 mb-2">
+          <p class="text-xs font-bold text-cyan-300 mb-2 flex items-center gap-2">📦 O que preparar para o Demo Day</p>
+          <div class="grid md:grid-cols-2 gap-x-6 gap-y-1.5">
+            <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 shrink-0">›</span> PR(s) aberta(s) ou mergeada(s) com o trabalho da semana</p>
+            <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 shrink-0">›</span> Métrica de impacto: antes vs depois (cobertura, build time, débitos)</p>
+            <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 shrink-0">›</span> 1 aprendizado ou decisão técnica relevante da semana</p>
+            <p class="text-xs text-slate-400 flex items-start gap-2"><span class="text-cyan-400 shrink-0">›</span> 15 min de apresentação (5 técnico + 10 demo/discussão)</p>
+          </div>
         </div>
 
         <!-- 14:00 Demo Day -->
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">14:00 → 17:00</span>
-          <h4 class="font-semibold text-white mt-1">Demo Day <span class="text-cyan-400">🎉</span></h4>
+          <h4 class="font-semibold text-white mt-1">Demo Day <span class="text-cyan-400">🎉</span><span class="text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/25 rounded-full px-2 py-0.5 ml-2">🟢 Ao Vivo</span></h4>
           <p class="text-slate-400 text-sm mt-2 mb-4">O grande momento da semana. Cada dupla tem <strong class="text-white">~15 minutos</strong> para mostrar o que fez — sem burocracia, com orgulho. Não é apresentação corporativa: é contar uma história de antes e depois.</p>
 
           <div class="grid md:grid-cols-2 gap-4 mb-4">
@@ -808,8 +892,22 @@
         <div class="relative">
           <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-pink-400 ring-4 ring-pink-400/20"></div>
           <span class="mono text-xs text-cyan-400 font-semibold">17:00 → livre</span>
-          <h4 class="font-semibold text-white mt-1">Encerramento & Happy Hour 🍻</h4>
+          <h4 class="font-semibold text-white mt-1">Encerramento & Happy Hour 🍻<span class="text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/25 rounded-full px-2 py-0.5 ml-2">🟢 Ao Vivo</span></h4>
           <p class="text-slate-400 text-sm mt-1">Fim da semana. Momento de celebrar o que foi construído, agradecer quem tornou isso possível e entrar no Q2 com energia renovada. Sem pauta, sem computador.</p>
+        </div>
+
+        <!-- O que vem depois -->
+        <div class="relative">
+          <div class="absolute -left-8 top-1 w-3 h-3 rounded-full bg-slate-600 ring-4 ring-slate-600/20"></div>
+          <span class="mono text-xs text-slate-500 font-semibold">Segunda 07/04 em diante</span>
+          <h4 class="font-semibold text-slate-300 mt-1">Retorno à estrutura normal 🔄</h4>
+          <p class="text-slate-500 text-sm mt-1 mb-3">Os times voltam à cadência habitual. Cada time organiza sua própria planning para o Q2 de forma independente.</p>
+          <div class="bg-slate-800/40 rounded-xl p-4 border border-slate-700/60">
+            <p class="text-xs text-slate-400 flex items-start gap-2">
+              <span class="text-yellow-400 shrink-0">💡</span>
+              <span><strong class="text-slate-300">Dica para a primeira sprint de Q2:</strong> Aproveite o momentum da semana. A primeira sprint pode ser usada estrategicamente para spikes técnicos, planejamento aprofundado, bugs críticos represados e decisões arquiteturais maiores — antes de mergulhar nas features do trimestre.</span>
+            </p>
+          </div>
         </div>
 
       </div>
@@ -1157,15 +1255,6 @@
     btn.classList.add('text-slate-200','bg-slate-800');
   }
 
-  // ─── Auto-select today ───────────────────────────────────────
-  (function() {
-    const today = new Date();
-    const d = today.getDay();
-    const tabs = document.querySelectorAll('.tab-btn');
-    const map = { 1:0, 2:1, 3:2, 4:3 };
-    if (map[d] !== undefined) tabs[map[d]].click();
-  })();
-
   // ─── Countdown badge ─────────────────────────────────────────
   (function() {
     const start = new Date('2026-03-30T09:00:00');
@@ -1185,6 +1274,46 @@
       badge.style.background='rgba(30,41,59,0.8)';
       badge.style.color='#64748b';
     }
+  })();
+
+  // ─── Highlight sessão atual ──────────────────────────────────
+  (function() {
+    const schedule = [
+      { day:'seg', start:'2026-03-30T09:30', end:'2026-03-30T10:00', idx:0 },
+      { day:'seg', start:'2026-03-30T10:15', end:'2026-03-30T12:00', idx:1 },
+      { day:'seg', start:'2026-03-30T14:00', end:'2026-03-30T15:00', idx:2 },
+      { day:'seg', start:'2026-03-30T15:00', end:'2026-03-30T17:00', idx:3 },
+      { day:'ter', start:'2026-03-31T09:30', end:'2026-03-31T12:00', idx:0 },
+      { day:'ter', start:'2026-03-31T14:00', end:'2026-03-31T18:00', idx:1 },
+      { day:'qua', start:'2026-04-01T09:30', end:'2026-04-01T10:30', idx:0 },
+      { day:'qua', start:'2026-04-01T10:30', end:'2026-04-01T12:00', idx:1 },
+      { day:'qua', start:'2026-04-01T14:00', end:'2026-04-01T18:00', idx:2 },
+      { day:'qui', start:'2026-04-02T09:30', end:'2026-04-02T11:30', idx:0 },
+      { day:'qui', start:'2026-04-02T14:00', end:'2026-04-02T17:00', idx:1 },
+      { day:'qui', start:'2026-04-02T17:00', end:'2026-04-02T20:00', idx:2 },
+    ];
+    function highlightCurrent() {
+      const now = new Date();
+      document.querySelectorAll('.timeline-session-active').forEach(el => {
+        el.classList.remove('timeline-session-active','ring-2','ring-cyan-400/50');
+      });
+      for (const s of schedule) {
+        if (now >= new Date(s.start) && now <= new Date(s.end)) {
+          const dayEl = document.getElementById('day-'+s.day);
+          if (!dayEl) continue;
+          const sessions = dayEl.querySelectorAll('.relative > .absolute.-left-8');
+          if (sessions[s.idx]) {
+            const parent = sessions[s.idx].parentElement;
+            parent.classList.add('timeline-session-active','ring-2','ring-cyan-400/50');
+            parent.style.borderRadius = '0.75rem';
+            parent.style.padding = '0.75rem';
+          }
+          break;
+        }
+      }
+    }
+    highlightCurrent();
+    setInterval(highlightCurrent, 60000);
   })();
 
   // ─── Sticky bar on scroll ────────────────────────────────────
